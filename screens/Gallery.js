@@ -5,9 +5,8 @@ import styles from './PhotoScreen.js';
 
 export default ({captures}) => (
     <ScrollView
-        horizontal={true}
-        style={[styles.bottomToolbar, styles.galleryContainer]}
-    >
+        //horizontal={true}
+        style={styles.galleryContainer}>
         {captures.map(({ uri }) => (
             <View style={styles.galleryImageContainer} key={uri}>
                 <Text>{ uri }</Text>

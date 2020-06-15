@@ -104,22 +104,22 @@ export const styles = StyleSheet.create({
     marginBottom: 20
   },
   galleryContainer: {
-    //bottom: 100
+    bottom: 100
   },
   galleryImageContainer: {
-    /*width: 75,
-    height: 75,
-    marginRight: 5*/
+    width: 0.95 * width,
+    height: height,
+    marginRight: 5
   },
   galleryImage: {
-    /*width: 75,
-    height: 75*/
+    width: 0.95 * width,
+    height: height
   },
   bottomToolbar: {
-      /*width: width,
+      width: width,
       position: 'absolute',
       height: 100,
-      bottom: 0,*/
+      bottom: 0,
   }
 });
 
