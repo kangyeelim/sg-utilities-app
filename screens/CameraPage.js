@@ -8,6 +8,9 @@ import Toolbar from './Toolbar.js'
 var { height, width } = Dimensions.get('window');
 
 class CameraPage extends React.Component {
+  static navigationOptions = ({navigation}) => ({
+  })
+
   camera = null;
 
   state = {
@@ -18,6 +21,8 @@ class CameraPage extends React.Component {
     // start the back camera by default
     cameraType: Camera.Constants.Type.back,
     hasCameraPermission: null,
+    year: 0,
+    month: 0,
   };
 
   setFlashMode = (flashMode) => this.setState({ flashMode });
@@ -26,15 +31,33 @@ class CameraPage extends React.Component {
 
   handleShortCapture = async () => {
         const photoData = await this.camera.takePictureAsync();
-        this.setState({ capturing: false, captures: [photoData, ...this.state.captures] });
-        this.props.navigation.navigate('PhotoScreen', {year:this.props.navigation.getParams('year'),
-        month:this.props.navigation.getParam('month'), captures:this.state.captures});
+        this.setState({ capturing:false});
+        this.setState({captures:[photoData, ...this.state.captures]});
+        console.log({
+          year:this.state.year,
+          month:this.state.month,
+          captures:this.state.captures,
+        });
+        this.props.navigation.navigate('PhotoScreen',
+        {
+          year:this.state.year,
+          month:this.state.month,
+          captures:this.state.captures,
+        });
+
+        //need to save into store dates with uri after making copy in filesystem
   };
 
   async componentDidMount() {
     const camera = await Permissions.askAsync(Permissions.CAMERA);
     const audio = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
     const hasCameraPermission = (camera.status === 'granted' && audio.status === 'granted');
+    this.setState({captures:this.props.navigation.getParam('captures')});
+    this.setState({year:this.props.navigation.getParam('year')});
+    this.setState({month:this.props.navigation.getParam('month')});
+    console.log(this.state.captures);
+    console.log(this.state.year);
+    console.log(this.state.month);
 
     this.setState({ hasCameraPermission });
   };

@@ -73,8 +73,6 @@ class OverviewScreen extends React.Component {
       for (var i = start; i < electReadings.length - 1; i++) {
         electLabels.push(electReadings[i].id.substring(5, electReadings[i].id.length));
         var difference = parseInt(electReadings[i + 1].reading) - parseInt(electReadings[i].reading);
-        console.log()
-        console.log(difference)
         electData.push(difference);
       }
 
@@ -219,7 +217,6 @@ const chartConfigGas = {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.electReadings);
   return {
     electReadings: state.electReadings,
     waterReadings: state.waterReadings,
