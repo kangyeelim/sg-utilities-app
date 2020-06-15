@@ -1,18 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { AntDesign } from '@expo/vector-icons';
 
 class BillsScreen extends React.Component {
-  static navigationOptions = {
-    tabBarIcon: ({focused}) => (
-      <AntDesign name="filetext1" size={25} color="black" />
-    ),
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: 'All Bills',
+  })
+
+  addBill() {
+    this.props.navigation.push('Bill');
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
+        <Button onPress={()=>this.addBill()}
+        title="Add Bill"/>
         <Text>Bills</Text>
       </View>
     );

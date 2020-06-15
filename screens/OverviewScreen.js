@@ -12,11 +12,6 @@ var { height, width } = Dimensions.get('window');
 
 
 class OverviewScreen extends React.Component {
-  /*static navigationOptions = {
-    tabBarIcon: ({focused}) => (
-      <AntDesign name="barschart" size={25} color="black" />
-    ),
-  }*/
 
   static navigationOptions = ({navigation}) => ({
     headerTitle: 'Overview',
