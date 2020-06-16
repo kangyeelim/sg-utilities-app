@@ -1,17 +1,25 @@
 import React from 'react';
-import { View, Image, ScrollView, Text } from 'react-native';
+import { View, Image, ScrollView, Text, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
+import { styles } from './CameraPage.js';
+import { AntDesign } from '@expo/vector-icons';
 
-import styles from './PhotoScreen.js';
+var { height, width } = Dimensions.get('window');
 
-export default ({captures}) => (
-    <ScrollView
-        //horizontal={true}
-        style={styles.galleryContainer}>
-        {captures.map(({ uri }) => (
-            <View style={styles.galleryImageContainer} key={uri}>
-                <Text>{ uri }</Text>
-                <Image source={{uri}} style={styles.galleryImage} />
+export default ({captures, onDelete}) => (
+        <View style={{ alignSelf: 'center', marginTop: 30, marginBottom: 30}}>
+        {captures.map((uri) => (
+            <View style={{
+              width: 0.9 * width,
+              height: 0.85 * height,
+              alignSelf:'center',
+              marginBottom:30 }}>
+              <ImageBackground source={{uri}} style={{width: 0.9 * width, height: 0.85 * height}} />
+              <TouchableOpacity style={{alignSelf:'center', marginBottom: 10}} onPress={() => onDelete(uri)}>
+                <AntDesign name="closecircleo" size={24} color="black" />
+              </TouchableOpacity>
             </View>
+
         ))}
-    </ScrollView>
+        </View>
+
 );

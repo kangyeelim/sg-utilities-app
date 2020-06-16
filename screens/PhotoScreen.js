@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TextInput, Button, ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Gallery from './Gallery.js';
+import * as FileSystem from 'expo-file-system';
 
 var { height, width } = Dimensions.get('window');
 
@@ -27,6 +28,7 @@ class PhotoScreen extends React.Component {
       this.setState({captures:this.props.navigation.getParam('captures')});
     }
     this.setState({checkedForProps:true});
+    console.log("checkedForProps");
   }
 
   componentDidMount() {
@@ -52,10 +54,26 @@ class PhotoScreen extends React.Component {
     }
   }
 
+  handleDeletePhoto = async (uri) => {
+    await FileSystem.deleteAsync(uri).catch((error) => {
+      console.log(JSON.stringify(error));
+    });
+    this.removeUriFromCaptures(uri);
+  };
+
+  removeUriFromCaptures(uri) {
+    var newCaptures = this.state.captures.filter( function (value, index, arr) {
+      return value !== uri;
+    });
+    this.setState({captures:newCaptures});
+  }
+
   render() {
     return (
+      <ScrollView style={styles.scrollview}>
       <View style={styles.container}>
-        <Text>Year (YYYY):</Text>
+
+        <Text style={styles.text}>Year (YYYY):</Text>
         { this.state.checkedForProps && (<TextInput
 					style={styles.input}
 					placeholder="Year"
@@ -64,7 +82,7 @@ class PhotoScreen extends React.Component {
 					ref={input => { this.yearInput = input }}
           keyboardType="numeric"
 				/>)}
-        <Text>Month (MM):</Text>
+        <Text style={styles.text}>Month (MM):</Text>
         { this.state.checkedForProps && (<TextInput
 					style={styles.input}
 					placeholder="Month"
@@ -73,14 +91,16 @@ class PhotoScreen extends React.Component {
 					ref={input => { this.monthInput = input }}
           keyboardType="numeric"
 				/>)}
-        { this.state.checkedForProps && (<Button onPress={()=>this.takePhoto()}
+        { this.state.checkedForProps && (<Button style={styles.photoButton} onPress={()=>this.takePhoto()}
         title="Take Photo"/>)}
         {(this.state.checkedForProps) && (this.state.captures.length > 0)
-          && (<Gallery captures={this.state.captures}/>)}
+          && (<Gallery style={styles.gallery} captures={this.state.captures} onDelete={this.handleDeletePhoto}/>)}
         {(this.state.checkedForProps) && (this.state.captures.length > 0)
-          && (<Button onPress={()=>this.saveBill()}
+          && (<Button style={styles.saveButton} onPress={()=>this.saveBill()}
           title="Save Bill" />)}
+
       </View>
+      </ScrollView>
     );
   }
 }
@@ -91,6 +111,10 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  scrollview:{
+    flex: 1,
+    backgroundColor: '#fff',
   },
   input: {
 	  borderWidth: 1,
@@ -103,17 +127,33 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 20
   },
+  text: {
+    marginTop: 10,
+    alignSelf:'center',
+  },
+  saveButton: {
+    alignSelf:'center',
+    marginTop: 30,
+  },
+  photoButton: {
+    alignSelf:'center',
+    marginTop: 20,
+    marginBottom: 30,
+  },
+  gallery:{
+    alignSelf: 'center',
+  },
   galleryContainer: {
     bottom: 100
   },
   galleryImageContainer: {
-    width: 0.95 * width,
-    height: height,
+    width: 75,
+    height: 75,
     marginRight: 5
   },
   galleryImage: {
-    width: 0.95 * width,
-    height: height
+    width: 75,
+    height: 75
   },
   bottomToolbar: {
       width: width,

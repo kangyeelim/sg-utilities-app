@@ -29,6 +29,7 @@ export default ({
             </Col>
             <Col size={2} style={styles.alignCenter}>
                 <TouchableWithoutFeedback
+                    onPressIn={onCaptureIn}
                     onPress={onShortCapture}>
                     <View style={[styles.captureBtn, capturing && styles.captureBtnActive]}>
                         {capturing && <View style={styles.captureBtnInternal} />}

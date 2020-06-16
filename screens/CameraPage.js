@@ -3,7 +3,9 @@ import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import { withNavigation } from 'react-navigation';
+import * as FileSystem from 'expo-file-system';
 import Toolbar from './Toolbar.js'
+import Gallery from './Gallery.js'
 
 var { height, width } = Dimensions.get('window');
 
@@ -31,13 +33,14 @@ class CameraPage extends React.Component {
 
   handleShortCapture = async () => {
         const photoData = await this.camera.takePictureAsync();
-        this.setState({ capturing:false});
-        this.setState({captures:[photoData, ...this.state.captures]});
-        console.log({
-          year:this.state.year,
-          month:this.state.month,
-          captures:this.state.captures,
+        this.setState({capturing:false});
+        const filename = new Date().getTime() + '.jpg';
+        const directory = 'Pictures';
+        const image = `${FileSystem.documentDirectory}${directory}/` + filename;
+        await FileSystem.copyAsync({from:photoData.uri, to:image}).catch((error) => {
+            console.log(JSON.stringify(error));
         });
+        this.setState({captures:[image, ...this.state.captures]});
         this.props.navigation.navigate('PhotoScreen',
         {
           year:this.state.year,
@@ -55,10 +58,6 @@ class CameraPage extends React.Component {
     this.setState({captures:this.props.navigation.getParam('captures')});
     this.setState({year:this.props.navigation.getParam('year')});
     this.setState({month:this.props.navigation.getParam('month')});
-    console.log(this.state.captures);
-    console.log(this.state.year);
-    console.log(this.state.month);
-
     this.setState({ hasCameraPermission });
   };
 
@@ -78,6 +77,7 @@ class CameraPage extends React.Component {
             style={styles.preview}
             ref={camera => this.camera = camera}
             type={this.state.cameraType}
+            flashMode={this.state.flashMode}
           />
         </View>
         <Toolbar
@@ -86,6 +86,7 @@ class CameraPage extends React.Component {
         cameraType={this.state.cameraType}
         setFlashMode={this.setFlashMode}
         setCameraType={this.setCameraType}
+        onCaptureIn={this.handleCaptureIn}
         onShortCapture={this.handleShortCapture} />
       </React.Fragment>
     );
