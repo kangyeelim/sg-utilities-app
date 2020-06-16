@@ -49,7 +49,7 @@ class PhotoScreen extends React.Component {
 
   saveBill() {
     //save into redux store
-    if (+this.state.month > 0 && +this.state.year > 0 && this.state.captures.length > 0) {
+    if (+this.state.month > 0 && +this.state.month < 13 && +this.state.year > 0 && this.state.captures.length > 0) {
       this.props.navigation.push('BillsScreen');
     }
   }
