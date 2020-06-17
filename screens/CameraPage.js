@@ -40,7 +40,7 @@ class CameraPage extends React.Component {
         await FileSystem.copyAsync({from:photoData.uri, to:image}).catch((error) => {
             console.log(JSON.stringify(error));
         });
-        this.setState({captures:[image, ...this.state.captures]});
+        this.setState({captures:[...this.state.captures, image]});
         this.props.navigation.navigate('PhotoScreen',
         {
           year:this.state.year,

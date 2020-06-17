@@ -17,6 +17,7 @@ import { AntDesign } from '@expo/vector-icons';
 import {store, persistor} from './redux/store.js'
 import {Provider} from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import * as FileSystem from 'expo-file-system';
 
 const SubmitStack = createStackNavigator({
   MainScreen: SubmitScreen,
@@ -83,6 +84,19 @@ const AppNavigator = createSwitchNavigator({
 const AppContainer = createAppContainer(AppNavigator);
 
 class App extends React.Component {
+
+  async componentDidMount() {
+    //For development, to clear the file FileSystem (remove when persist store)
+    const directory = 'Pictures';
+    const fileUri = `${FileSystem.documentDirectory}${directory}`
+    var arr = await FileSystem.readDirectoryAsync(fileUri);
+    for (var i = 0; i < arr.length; i++) {
+      await FileSystem.deleteAsync(arr[i]).catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+    }
+  }
+
   render() {
     return (
       <Provider store={store}>

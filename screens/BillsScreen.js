@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView, SafeAreaV
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import * as FileSystem from 'expo-file-system';
-import { deleteUnsavedPhotos } from '../redux/actions'
+import { deleteUnsavedPhotos, deleteBill, deletePhoto } from '../redux/actions'
 import Gallery from './Gallery.js';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -33,7 +33,7 @@ class BillsScreen extends React.Component {
         await FileSystem.deleteAsync(arr[i]).catch((error) => {
           console.log(JSON.stringify(error));
         });
-        console.log("deleted");
+        this.props.deletePhoto(arr[i]);
       }
     }
   }
@@ -42,11 +42,24 @@ class BillsScreen extends React.Component {
     await this.deleteAllUnsavedPhotosFromFS();
     this.props.deleteUnsavedPhotos();
     this.setState({deletedPhotos:true});
-    console.log("done");
   }
 
-  showBillPhotos(captures) {
-    this.props.navigation.push('Photo', {captures:captures});
+  showBillPhotos(captures, year, month) {
+    this.props.navigation.push('Photo', {captures:captures, year:year, month:month});
+  }
+
+  editBill(bill) {
+    this.props.navigation.push('Bill', {month:bill.month, year:bill.year, captures:bill.captures, editing:true});
+  }
+
+  async deleteBill(bill) {
+    this.props.deleteBill(bill);
+    for (var i = 0; i < bill.captures.length; i++) {
+      await FileSystem.deleteAsync(bill.captures[i]).catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+      this.props.deletePhoto(bill.captures[i]);
+    }
   }
 
   render() {
@@ -60,13 +73,24 @@ class BillsScreen extends React.Component {
         </View>
         <SafeAreaView style={styles.container}>
           <FlatList contentContainerStyle={{padding: 20}}
-            data={this.props.bills}
+            data={this.props.bills.sort(function(a,b) {
+                a = parseInt(a.year) + parseInt(a.month);
+                b = parseInt(b.year) + parseInt(b.month);
+                return a > b ? 1 : a < b ? -1 : 0;
+              // return a.localeCompare(b);         // <-- alternative
+              })}
             renderItem={({ item }) => (
-
-              <TouchableOpacity style={styles.clickable} onPress={() => this.showBillPhotos(item.captures)}>
+              <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity style={{alignSelf:'center', marginRight:20}} onPress={() => this.editBill(item)}>
+                <AntDesign name="edit" size={20} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.clickable} onPress={() => this.showBillPhotos(item.captures, item.year, months[parseInt(item.month) - 1])}>
                 <Text>{months[parseInt(item.month) - 1]} {item.year}</Text>
               </TouchableOpacity>
-              
+              <TouchableOpacity style={{marginLeft: 20, alignSelf:'center'}} onPress={() => this.deleteBill(item)}>
+                <AntDesign name="delete" size={20} color="black" />
+              </TouchableOpacity>
+              </View>
             )}
             keyExtractor={item => item.year + item.month}
           />
@@ -75,14 +99,6 @@ class BillsScreen extends React.Component {
     );
   }
 }
-
-/*{this.props.bills.map((bill) => (
-
-  <TouchableOpacity style={styles.clickable} onPress={() => this.showBillPhotos(bill.captures)}>
-    <Text>{months[parseInt(bill.month) - 1]} {bill.year}</Text>
-  </TouchableOpacity>
-
-))}*/
 
 const styles = StyleSheet.create({
   container: {
@@ -103,7 +119,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    borderWidth: 0.05,
+    borderWidth: 0.1,
+    borderRadius: 5
   },
   scrollable: {
     flex: 1,
@@ -122,4 +139,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withNavigation(connect(mapStateToProps, { deleteUnsavedPhotos: deleteUnsavedPhotos}) (BillsScreen));
+export default withNavigation(connect(mapStateToProps, { deleteUnsavedPhotos: deleteUnsavedPhotos, deleteBill:deleteBill, deletePhoto:deletePhoto}) (BillsScreen));

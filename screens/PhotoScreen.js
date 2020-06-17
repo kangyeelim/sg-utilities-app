@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation';
 import Gallery from './Gallery.js';
 import * as FileSystem from 'expo-file-system';
 import { connect } from 'react-redux';
-import { updateBill, updatePhoto } from '../redux/actions'
+import { updateBill, updatePhoto, deleteBill, deletePhoto } from '../redux/actions'
 var { height, width } = Dimensions.get('window');
 
 class PhotoScreen extends React.Component {
@@ -18,15 +18,25 @@ class PhotoScreen extends React.Component {
       month: 0,
       checkedForProps: false,
       captures: [],
+      stateBeforeEdit: null,
     };
   }
 
   checkProps() {
     if (this.props.navigation.getParam('year') != null && this.props.navigation.getParam('month') != null &&
-    this.props.navigation.getParam('captures') != null && this.props.navigation.getParam('uri') != null) {
+    this.props.navigation.getParam('captures') != null) {
       this.setState({year:this.props.navigation.getParam('year')});
       this.setState({month:this.props.navigation.getParam('month')});
       this.setState({captures:this.props.navigation.getParam('captures')});
+    }
+    if (this.props.navigation.getParam('editing') != null && this.props.navigation.getParam('editing')) {
+      this.setState({stateBeforeEdit: {
+        year:this.props.navigation.getParam('year'),
+        month:this.props.navigation.getParam('month'),
+        captures:this.props.navigation.getParam('captures')
+      }});
+    }
+    if (this.props.navigation.getParam('uri') != null) {
       this.props.updatePhoto({uri:this.props.navigation.getParam('uri'), saved:false});
     }
     this.setState({checkedForProps:true});
@@ -55,9 +65,23 @@ class PhotoScreen extends React.Component {
       }
   }
 
+  updateBeforeEditPhotosAsUnsavedInStore() {
+    for (var i = 0; i < this.state.stateBeforeEdit.captures.length; i++) {
+      this.props.updatePhoto({uri:this.state.stateBeforeEdit.captures[i], saved:false});
+    }
+  }
+
+  removeBeforeEditBillFromStore() {
+    if (this.state.stateBeforeEdit != null) {
+      this.props.deleteBill(this.state.stateBeforeEdit);
+      this.updateBeforeEditPhotosAsUnsavedInStore();
+    }
+  }
+
   saveBill() {
     //save into redux store
     if (+this.state.month > 0 && +this.state.month < 13 && +this.state.year > 0 && this.state.captures.length > 0) {
+      this.removeBeforeEditBillFromStore();
       this.props.updateBill({month:this.state.month, year:this.state.year, captures:this.state.captures});
       this.updateSavedPhotosInStore();
       this.props.navigation.push('BillsScreen');
@@ -165,4 +189,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withNavigation(connect(mapStateToProps, { updateBill: updateBill, updatePhoto:updatePhoto}) (PhotoScreen));
+export default withNavigation(connect(mapStateToProps, { updateBill: updateBill, updatePhoto:updatePhoto,
+  deleteBill:deleteBill, deletedPhoto:deletePhoto}) (PhotoScreen));
