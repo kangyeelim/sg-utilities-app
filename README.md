@@ -10,7 +10,7 @@ bills.
 
 * Readings: Input daily utility meter readings 
 
-* Reminder: Set daily push notification reminder to take meter readings
+* Reminder: Set daily push notification reminder to take meter readings (in progress)
 
 
 ## Setup
