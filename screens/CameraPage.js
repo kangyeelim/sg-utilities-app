@@ -46,6 +46,7 @@ class CameraPage extends React.Component {
           year:this.state.year,
           month:this.state.month,
           captures:this.state.captures,
+          uri:image,
         });
 
         //need to save into store dates with uri after making copy in filesystem

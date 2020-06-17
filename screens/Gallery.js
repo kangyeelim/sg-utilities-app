@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Image, ScrollView, Text, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
-import { styles } from './CameraPage.js';
 import { AntDesign } from '@expo/vector-icons';
 
 var { height, width } = Dimensions.get('window');

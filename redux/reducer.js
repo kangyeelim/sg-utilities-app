@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
 
-import { UPDATE_E_READING, DELETE_E_READING, UPDATE_MARKED_DATE, UPDATE_W_READING, DELETE_W_READING, UPDATE_G_READING, DELETE_G_READING, } from './actions';
+import { UPDATE_E_READING, DELETE_E_READING, UPDATE_MARKED_DATE, UPDATE_W_READING, DELETE_W_READING,
+  UPDATE_G_READING, DELETE_G_READING, UPDATE_BILL, DELETE_BILL, UPDATE_PHOTO, DELETE_PHOTO, DELETE_UNSAVED_PHOTOS } from './actions';
 
 const electReadingReducer = (state=[], action) => {
   switch (action.type) {
@@ -48,11 +49,41 @@ const gasReadingReducer = (state=[], action) => {
   }
 }
 
+const billReducer = (state=[], action) => {
+  switch (action.type) {
+    case UPDATE_BILL:
+      var newState = state.filter((bill) => !(bill.month == action.payload.month && bill.year == action.payload.year));
+      return newState.concat(action.payload);
+    case DELETE_BILL:
+      return state.filter((bill) => !(bill.month == action.payload.month && bill.year == action.payload.year));
+    default:
+      return state;
+  }
+}
+
+const photoReducer = (state=[], action) => {
+  switch (action.type) {
+    case UPDATE_PHOTO:
+      var newState = state.filter((photo) => photo.uri != action.payload.uri);
+      return newState.concat(action.payload);
+    case DELETE_PHOTO:
+      return state.filter((photo) => photo.uri != action.payload.uri);
+    case DELETE_UNSAVED_PHOTOS:
+      var newState = state.filter((photo) => photo.saved == true);
+      return newState;
+    default:
+      return state;
+  }
+}
+
+
 const reducer = combineReducers({
   electReadings: electReadingReducer,
   markedDates: markedDatesReducer,
   waterReadings: waterReadingReducer,
   gasReadings: gasReadingReducer,
+  bills: billReducer,
+  photos: photoReducer,
 })
 
 export default reducer;

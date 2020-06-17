@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen.js'
 import OverviewScreen from './screens/OverviewScreen.js'
 import BillsScreen from './screens/BillsScreen.js'
 import PhotoScreen from './screens/PhotoScreen.js'
+import BillPhoto from './screens/BillPhoto.js'
 import CameraPage from './screens/CameraPage.js'
 import SubmitScreen from './screens/SubmitScreen.js'
 import SettingsScreen from './screens/SettingsScreen.js'
@@ -44,6 +45,7 @@ const PhotoSwitch = createSwitchNavigator({
 const BillStack = createStackNavigator({
   BillsScreen: BillsScreen,
   Bill: PhotoSwitch,
+  Photo: BillPhoto,
   }, {
     initialRouteName:'BillsScreen'
 })

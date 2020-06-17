@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Dimensions, TextInput, Button, ScrollView } fro
 import { withNavigation } from 'react-navigation';
 import Gallery from './Gallery.js';
 import * as FileSystem from 'expo-file-system';
-
+import { connect } from 'react-redux';
+import { updateBill, updatePhoto } from '../redux/actions'
 var { height, width } = Dimensions.get('window');
 
 class PhotoScreen extends React.Component {
@@ -22,10 +23,11 @@ class PhotoScreen extends React.Component {
 
   checkProps() {
     if (this.props.navigation.getParam('year') != null && this.props.navigation.getParam('month') != null &&
-    this.props.navigation.getParam('captures') != null) {
+    this.props.navigation.getParam('captures') != null && this.props.navigation.getParam('uri') != null) {
       this.setState({year:this.props.navigation.getParam('year')});
       this.setState({month:this.props.navigation.getParam('month')});
       this.setState({captures:this.props.navigation.getParam('captures')});
+      this.props.updatePhoto({uri:this.props.navigation.getParam('uri'), saved:false});
     }
     this.setState({checkedForProps:true});
     console.log("checkedForProps");
@@ -47,9 +49,17 @@ class PhotoScreen extends React.Component {
     this.props.navigation.navigate('Camera', {year:this.state.year, month:this.state.month, captures:this.state.captures});
   }
 
+  updateSavedPhotosInStore() {
+      for (var i = 0; i < this.state.captures.length; i++) {
+        this.props.updatePhoto({uri:this.state.captures[i], saved:true});
+      }
+  }
+
   saveBill() {
     //save into redux store
     if (+this.state.month > 0 && +this.state.month < 13 && +this.state.year > 0 && this.state.captures.length > 0) {
+      this.props.updateBill({month:this.state.month, year:this.state.year, captures:this.state.captures});
+      this.updateSavedPhotosInStore();
       this.props.navigation.push('BillsScreen');
     }
   }
@@ -78,7 +88,7 @@ class PhotoScreen extends React.Component {
 					style={styles.input}
 					placeholder="Year"
 					onChangeText={reading => this.setYear(reading)}
-					defaultValue={this.state.year}
+					defaultValue={this.state.year.toString()}
 					ref={input => { this.yearInput = input }}
           keyboardType="numeric"
 				/>)}
@@ -87,7 +97,7 @@ class PhotoScreen extends React.Component {
 					style={styles.input}
 					placeholder="Month"
 					onChangeText={reading => this.setMonth(reading)}
-					defaultValue={this.state.month}
+					defaultValue={this.state.month.toString()}
 					ref={input => { this.monthInput = input }}
           keyboardType="numeric"
 				/>)}
@@ -140,21 +150,6 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 30,
   },
-  gallery:{
-    alignSelf: 'center',
-  },
-  galleryContainer: {
-    bottom: 100
-  },
-  galleryImageContainer: {
-    width: 75,
-    height: 75,
-    marginRight: 5
-  },
-  galleryImage: {
-    width: 75,
-    height: 75
-  },
   bottomToolbar: {
       width: width,
       position: 'absolute',
@@ -163,4 +158,11 @@ export const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(PhotoScreen);
+const mapStateToProps = (state) => {
+  return {
+    photos: state.photos,
+    bills: state.bills,
+  }
+}
+
+export default withNavigation(connect(mapStateToProps, { updateBill: updateBill, updatePhoto:updatePhoto}) (PhotoScreen));

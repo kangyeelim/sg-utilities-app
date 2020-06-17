@@ -6,6 +6,11 @@ export const UPDATE_W_READING = 'UPDATE_W_READING'
 export const DELETE_W_READING = 'DELETE_W_READING'
 export const UPDATE_G_READING = 'UPDATE_G_READING'
 export const DELETE_G_READING = 'DELETE_G_READING'
+export const UPDATE_BILL = 'UPDATE_BILL'
+export const DELETE_BILL = 'DELETE_BILL'
+export const UPDATE_PHOTO = 'UPDATE_PHOTO'
+export const DELETE_PHOTO = 'DELETE_PHOTOs'
+export const DELETE_UNSAVED_PHOTOS = 'DELETE_UNSAVED_PHOTOS'
 // action creators
 export const updateElectReading = update => ({
   type: UPDATE_E_READING,
@@ -40,4 +45,28 @@ export const updateGasReading = update => ({
 export const deleteGasReading = reading => ({
   type: DELETE_G_READING,
   payload: reading,
+})
+
+export const updateBill = bill => ({
+  type: UPDATE_BILL,
+  payload: bill,
+})
+
+export const deleteBill = bill => ({
+  type: DELETE_BILL,
+  payload: bill,
+})
+
+export const updatePhoto = photo => ({
+  type: UPDATE_PHOTO,
+  payload: photo,
+})
+
+export const deletePhoto = photo => ({
+  type: DELETE_PHOTO,
+  payload: photo,
+})
+
+export const deleteUnsavedPhotos = () => ({
+  type: DELETE_UNSAVED_PHOTOS
 })
