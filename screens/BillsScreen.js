@@ -92,7 +92,7 @@ class BillsScreen extends React.Component {
               </TouchableOpacity>
               </View>
             )}
-            keyExtractor={item => item.year + item.month}
+            keyExtractor={item => item.year + item.month + item.captures[0]}
           />
         </SafeAreaView>
       </View>

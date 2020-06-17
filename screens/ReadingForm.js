@@ -115,7 +115,7 @@ class ReadingForm extends React.Component {
 					style={styles.input}
 					placeholder="Reading"
 					onChangeText={reading => this.setElectReading(reading)}
-					defaultValue={this.state.electReading}
+					defaultValue={this.state.electReading.toString()}
 					ref={input => { this.electReadingInput = input }}
           keyboardType="numeric"
 				/>)}
@@ -124,7 +124,7 @@ class ReadingForm extends React.Component {
       	style={styles.input}
       	placeholder="Reading"
         onChangeText={reading => this.setWaterReading(reading)}
-        defaultValue={this.state.waterReading}
+        defaultValue={this.state.waterReading.toString()}
       	ref={input => { this.waterReadingInput = input }}
         keyboardType="numeric"
       	/>)}
@@ -133,7 +133,7 @@ class ReadingForm extends React.Component {
         style={styles.input}
         placeholder="Reading"
         onChangeText={reading => this.setGasReading(reading)}
-        defaultValue={this.state.gasReading}
+        defaultValue={this.state.gasReading.toString()}
         ref={input => { this.gasReadingInput = input }}
         keyboardType="numeric"
         />)}

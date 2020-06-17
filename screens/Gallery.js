@@ -14,7 +14,7 @@ export default ({captures, onDelete}) => (
               marginBottom:30 }}>
               <ImageBackground source={{uri}} style={{width: 0.8 * width, height: 0.75 * height}} />
               <TouchableOpacity style={{alignSelf:'center', marginBottom: 10}} onPress={() => onDelete(uri)}>
-                <AntDesign name="closecircleo" size={24} color="black" />
+                <AntDesign name="delete" size={24} color="black" />
               </TouchableOpacity>
             </View>
 

@@ -80,7 +80,8 @@ class PhotoScreen extends React.Component {
 
   saveBill() {
     //save into redux store
-    if (+this.state.month > 0 && +this.state.month < 13 && +this.state.year > 0 && this.state.captures.length > 0) {
+    if (+this.state.month > 0 && +this.state.month < 13 && +this.state.year > 999 && parseInt(this.state.year) < parseInt(new Date().getFullYear())
+    && this.state.captures.length > 0) {
       this.removeBeforeEditBillFromStore();
       this.props.updateBill({month:this.state.month, year:this.state.year, captures:this.state.captures});
       this.updateSavedPhotosInStore();

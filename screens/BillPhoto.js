@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image, Dimensions, View, ScrollView } from 'react-native';
+import { StyleSheet, Image, Dimensions, View, ScrollView, Text } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ImageZoom from 'react-native-image-pan-zoom';
 var { height, width } = Dimensions.get('window');

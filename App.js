@@ -55,7 +55,7 @@ const Tabs = createBottomTabNavigator({
   Overview: OverviewStack,
   Bills: BillStack,
   Readings: SubmitStack,
-  Settings: SettingsScreen,
+  Reminder: SettingsScreen,
 })
 
 BillStack.navigationOptions = {
