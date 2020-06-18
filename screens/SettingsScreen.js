@@ -1,10 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Switch } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { deleteReminder, updateReminder } from '../redux/actions'
+import { connect } from 'react-redux';
+
+const DAILY_READING_REMINDER = 'daily_reading_reminder';
 
 const localNotification = {
     title: 'Utilities Tracker',
@@ -25,22 +29,23 @@ const localNotification = {
   };
 
 class SettingsScreen extends React.Component {
-  static navigationOptions = {
-    tabBarIcon: ({focused}) => (
-      <Ionicons name={`ios-options`} size={25} />
-    ),
-  }
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: 'Settings',
+  })
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       expoPushToken: '',
       notification: localNotification,
-      time: null,
+      date: null,
+      isDatePickerVisible: false,
+      isEnabled: false,
+      reminder: this.props.reminder,
     }
   }
 
-  /*registerForPushNotificationsAsync = async () => {
+  registerForPushNotificationsAsync = async () => {
     if (Constants.isDevice) {
       const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
       let finalStatus = existingStatus;
@@ -67,22 +72,108 @@ class SettingsScreen extends React.Component {
         vibrate: [0, 250, 250, 250],
       });
     }
-  };*/
+  };
 
   componentDidMount() {
-    //this.registerForPushNotificationsAsync();
+    this.registerForPushNotificationsAsync();
+    if (this.state.reminder.length == 1) {
+      this.setDate(this.state.reminder[0].date);
+      this.setIsEnabled(true);
+    }
   }
 
-  setTime(time) {
-    console.log(time);
-    this.setState({time:time});
+  setDatePickerVisibility(boolean) {
+    this.setState({isDatePickerVisible:boolean});
+  }
+
+  setDate(date) {
+    console.log(date);
+    this.setState({date:date});
+  }
+
+  setIsEnabled(boolean) {
+    this.setState({isEnabled:boolean});
+  }
+
+  showDatePicker = () => {
+    this.setDatePickerVisibility(true);
+  };
+
+  handleConfirm = async (dt) => {
+    this.hideDatePicker();
+    console.log("A time has been picked: ");
+    console.log(dt);
+    this.setDate(dt);
+    var id = await Notifications.scheduleLocalNotificationAsync(localNotification, {time:dt.getTime(), repeat:'day'})
+    console.log("The returned id is: ");
+    console.log(id);
+    this.props.updateReminder({type:DAILY_READING_REMINDER, date:dt, notification_id:id})
+  };
+
+  hideDatePicker = () => {
+    this.setDatePickerVisibility(false);
+  }
+
+  cancelSetTime = () => {
+    this.hideDatePicker();
+    this.setIsEnabled(false);
+    this.props.deleteReminder(DAILY_READING_REMINDER)
+  }
+
+  toggleSwitch = async () => {
+    if (this.state.isEnabled == true) {
+      this.setIsEnabled(false);
+      var reminder = this.state.reminder.filter((reminder)=> reminder.type == DAILY_READING_REMINDER);
+      await Notifications.cancelScheduledNotificationAsync(reminder[0].notification_id);
+      await Notifications.cancelAllScheduledNotificationsAsync()
+      console.log("the notification id deleted is: ");
+      console.log(reminder[0].notification_id);
+      this.props.deleteReminder(DAILY_READING_REMINDER);
+      this.setDate(null);
+    } else if (this.state.isEnabled == false) {
+      this.setIsEnabled(true);
+      this.showDatePicker();
+    }
+  }
+
+  formatTime() {
+    var dt = this.state.date;
+    var h =  dt.getHours(), m = dt.getMinutes();
+    if (parseInt(m) < 10) {
+      m = "0" + m;
+    }
+    var formattedH = h;
+    if (h > 12 && parseInt(h - 12) < 10) {
+      formattedH = "0" + (h - 12);
+    } else if (h <= 12 && parseInt(h) < 10 ) {
+      formattedH = "0" + h;
+    }
+    var _time = (h > 12) ? (formattedH + ':' + m +' PM') : (formattedH + ':' + m +' AM');
+    return _time;
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Set Daily Meter Reading Time</Text>
-        
+        <View style={{flexDirection:'row'}}>
+          <Text style={styles.text}>Daily Meter Reading Reminder</Text>
+          <Switch
+            style={styles.switch}
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={this.state.isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={this.toggleSwitch}
+            value={this.state.isEnabled}
+          />
+          </View>
+        { this.state.isDatePickerVisible && (<DateTimePickerModal
+          date={new Date()}
+          isVisible={this.state.isDatePickerVisible}
+          mode="time"
+          onConfirm={this.handleConfirm}
+          onCancel={this.cancelSetTime}
+        />)}
+        { this.state.date != null && (<Text>{this.formatTime()}</Text>)}
       </View>
     );
   }
@@ -95,6 +186,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  switch: {
+    alignSelf: 'center',
+    margin: 10
+  },
+  text: {
+    alignSelf:'center'
+  }
 });
 
-export default withNavigation(SettingsScreen);
+const mapStateToProps = (state) => {
+  return {
+    reminder: state.reminder,
+  }
+}
+
+
+export default withNavigation(connect(mapStateToProps, { deleteReminder:deleteReminder, updateReminder:updateReminder}) (SettingsScreen));

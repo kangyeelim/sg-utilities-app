@@ -1,7 +1,8 @@
 import {combineReducers} from 'redux';
 
 import { UPDATE_E_READING, DELETE_E_READING, UPDATE_MARKED_DATE, UPDATE_W_READING, DELETE_W_READING,
-  UPDATE_G_READING, DELETE_G_READING, UPDATE_BILL, DELETE_BILL, UPDATE_PHOTO, DELETE_PHOTO, DELETE_UNSAVED_PHOTOS } from './actions';
+  UPDATE_G_READING, DELETE_G_READING, UPDATE_BILL, DELETE_BILL, UPDATE_PHOTO, DELETE_PHOTO,
+  DELETE_UNSAVED_PHOTOS, UPDATE_REMINDER, DELETE_REMINDER } from './actions';
 
 const electReadingReducer = (state=[], action) => {
   switch (action.type) {
@@ -76,6 +77,17 @@ const photoReducer = (state=[], action) => {
   }
 }
 
+const reminderReducer = (state=[], action) => {
+  switch (action.type) {
+    case UPDATE_REMINDER:
+      var newState = state.filter((reminder) => reminder.type != action.payload.type);
+      return newState.concat(action.payload);
+    case DELETE_REMINDER:
+      return state.filter((reminder) => reminder.type != action.payload);
+    default:
+      return state;
+  }
+}
 
 const reducer = combineReducers({
   electReadings: electReadingReducer,
@@ -84,6 +96,7 @@ const reducer = combineReducers({
   gasReadings: gasReadingReducer,
   bills: billReducer,
   photos: photoReducer,
+  reminder: reminderReducer,
 })
 
 export default reducer;

@@ -18,6 +18,7 @@ import {store, persistor} from './redux/store.js'
 import {Provider} from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import * as FileSystem from 'expo-file-system';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const SubmitStack = createStackNavigator({
   MainScreen: SubmitScreen,
@@ -28,10 +29,17 @@ const SubmitStack = createStackNavigator({
 })
 
 const OverviewStack = createStackNavigator({
-  OverviewScreen: OverviewScreen,
+  Overview: OverviewScreen,
   },
   {
-    initialRouteName: 'OverviewScreen'
+    initialRouteName: 'Overview'
+})
+
+const SettingsStack = createStackNavigator({
+  Settings: SettingsScreen,
+  },
+  {
+    initialRouteName: 'Settings'
 })
 
 const PhotoSwitch = createSwitchNavigator({
@@ -55,12 +63,18 @@ const Tabs = createBottomTabNavigator({
   Overview: OverviewStack,
   Bills: BillStack,
   Readings: SubmitStack,
-  Reminder: SettingsScreen,
+  Reminder: SettingsStack,
 })
 
 BillStack.navigationOptions = {
   tabBarIcon: ({focused}) => (
     <AntDesign name="filetext1" size={25} color="black" />
+  ),
+}
+
+SettingsStack.navigationOptions = {
+  tabBarIcon: ({focused}) => (
+    <Ionicons name={`ios-options`} size={25} />
   ),
 }
 

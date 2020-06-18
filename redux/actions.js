@@ -11,6 +11,8 @@ export const DELETE_BILL = 'DELETE_BILL'
 export const UPDATE_PHOTO = 'UPDATE_PHOTO'
 export const DELETE_PHOTO = 'DELETE_PHOTOs'
 export const DELETE_UNSAVED_PHOTOS = 'DELETE_UNSAVED_PHOTOS'
+export const UPDATE_REMINDER = 'UPDATE_REMINDER'
+export const DELETE_REMINDER = 'DELETE_REMINDER'
 // action creators
 export const updateElectReading = update => ({
   type: UPDATE_E_READING,
@@ -69,4 +71,14 @@ export const deletePhoto = photo => ({
 
 export const deleteUnsavedPhotos = () => ({
   type: DELETE_UNSAVED_PHOTOS
+})
+
+export const updateReminder = time => ({
+  type: UPDATE_REMINDER,
+  payload: time
+})
+
+export const deleteReminder = type => ({
+  type: DELETE_REMINDER,
+  payload: type
 })

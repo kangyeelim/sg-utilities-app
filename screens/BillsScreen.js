@@ -6,13 +6,14 @@ import * as FileSystem from 'expo-file-system';
 import { deleteUnsavedPhotos, deleteBill, deletePhoto } from '../redux/actions'
 import Gallery from './Gallery.js';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'
 
 const months = [ "January", "February", "March", "April", "May", "June",
            "July", "August", "September", "October", "November", "December" ];
 
 class BillsScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
-    headerTitle: 'All Bills',
+    headerTitle: 'All Bills'
   })
 
   constructor() {
