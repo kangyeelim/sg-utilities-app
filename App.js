@@ -99,7 +99,7 @@ const AppContainer = createAppContainer(AppNavigator);
 
 class App extends React.Component {
 
-  async componentDidMount() {
+  /*async componentDidMount() {
     //For development, to clear the file FileSystem (remove when persist store)
     const directory = 'Pictures';
     const fileUri = `${FileSystem.documentDirectory}${directory}`
@@ -109,12 +109,14 @@ class App extends React.Component {
         console.log(JSON.stringify(error));
       });
     }
-  }
+  }*/
 
   render() {
     return (
       <Provider store={store}>
-          <AppContainer />
+          <PersistGate loading={null} persistor={persistor}>
+            <AppContainer />
+          </PersistGate>
       </Provider>
     );
   }

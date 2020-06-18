@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-
+import { persistor } from './store';
 import { UPDATE_E_READING, DELETE_E_READING, UPDATE_MARKED_DATE, UPDATE_W_READING, DELETE_W_READING,
   UPDATE_G_READING, DELETE_G_READING, UPDATE_BILL, DELETE_BILL, UPDATE_PHOTO, DELETE_PHOTO,
-  DELETE_UNSAVED_PHOTOS, UPDATE_REMINDER, DELETE_REMINDER } from './actions';
+  DELETE_UNSAVED_PHOTOS, UPDATE_REMINDER, DELETE_REMINDER, RESET } from './actions';
 
 const electReadingReducer = (state=[], action) => {
   switch (action.type) {
@@ -89,7 +89,7 @@ const reminderReducer = (state=[], action) => {
   }
 }
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
   electReadings: electReadingReducer,
   markedDates: markedDatesReducer,
   waterReadings: waterReadingReducer,
@@ -99,4 +99,11 @@ const reducer = combineReducers({
   reminder: reminderReducer,
 })
 
-export default reducer;
+const rootReducer = (state, action) => {
+  if (action.type == RESET) {
+    state = undefined;
+  }
+  return appReducer(state, action)
+}
+
+export default rootReducer;

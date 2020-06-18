@@ -13,6 +13,7 @@ export const DELETE_PHOTO = 'DELETE_PHOTOs'
 export const DELETE_UNSAVED_PHOTOS = 'DELETE_UNSAVED_PHOTOS'
 export const UPDATE_REMINDER = 'UPDATE_REMINDER'
 export const DELETE_REMINDER = 'DELETE_REMINDER'
+export const RESET = 'RESET'
 // action creators
 export const updateElectReading = update => ({
   type: UPDATE_E_READING,
@@ -81,4 +82,8 @@ export const updateReminder = time => ({
 export const deleteReminder = type => ({
   type: DELETE_REMINDER,
   payload: type
+})
+
+export const resetStore = () => ({
+  type: RESET
 })

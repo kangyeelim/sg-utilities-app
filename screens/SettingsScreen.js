@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Switch } from 'react-native';
+import { StyleSheet, Text, View, Switch, Button } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { deleteReminder, updateReminder } from '../redux/actions'
+import { deleteReminder, updateReminder, resetStore } from '../redux/actions'
 import { connect } from 'react-redux';
 
 const DAILY_READING_REMINDER = 'daily_reading_reminder';
@@ -152,6 +152,18 @@ class SettingsScreen extends React.Component {
     return _time;
   }
 
+  resetData = async () => {
+    this.props.resetStore();
+    const directory = 'Pictures';
+    const fileUri = `${FileSystem.documentDirectory}${directory}`
+    var arr = await FileSystem.readDirectoryAsync(fileUri);
+    for (var i = 0; i < arr.length; i++) {
+      await FileSystem.deleteAsync(arr[i]).catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -165,7 +177,11 @@ class SettingsScreen extends React.Component {
             onValueChange={this.toggleSwitch}
             value={this.state.isEnabled}
           />
-          </View>
+        </View>
+        <Button
+          onPress={this.resetData}
+          title="Delete & Reset All Data"
+        />
         { this.state.isDatePickerVisible && (<DateTimePickerModal
           date={new Date()}
           isVisible={this.state.isDatePickerVisible}
@@ -202,4 +218,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default withNavigation(connect(mapStateToProps, { deleteReminder:deleteReminder, updateReminder:updateReminder}) (SettingsScreen));
+export default withNavigation(connect(mapStateToProps, { deleteReminder:deleteReminder, updateReminder:updateReminder, resetStore:resetStore}) (SettingsScreen));
