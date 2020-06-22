@@ -178,10 +178,13 @@ class SettingsScreen extends React.Component {
             value={this.state.isEnabled}
           />
         </View>
-        <Button
-          onPress={this.resetData}
-          title="Delete & Reset All Data"
-        />
+        { this.state.date != null && (<Text style={styles.timing}>{this.formatTime()}</Text>)}
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={this.resetData}
+            title="Delete & Reset All Data"
+          />
+        </View>
         { this.state.isDatePickerVisible && (<DateTimePickerModal
           date={new Date()}
           isVisible={this.state.isDatePickerVisible}
@@ -189,7 +192,6 @@ class SettingsScreen extends React.Component {
           onConfirm={this.handleConfirm}
           onCancel={this.cancelSetTime}
         />)}
-        { this.state.date != null && (<Text>{this.formatTime()}</Text>)}
       </View>
     );
   }
@@ -208,6 +210,12 @@ const styles = StyleSheet.create({
   },
   text: {
     alignSelf:'center'
+  },
+  buttonContainer: {
+    margin: 20,
+  },
+  timing: {
+    margin: 20,
   }
 });
 

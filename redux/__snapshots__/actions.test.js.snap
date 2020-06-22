@@ -1,0 +1,516 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`deleteBill returns actions handles empty month, no year 1`] = `
+Object {
+  "payload": Object {
+    "month": "",
+  },
+  "type": "DELETE_BILL",
+}
+`;
+
+exports[`deleteBill returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "DELETE_BILL",
+}
+`;
+
+exports[`deleteBill returns actions handles empty year, no month 1`] = `
+Object {
+  "payload": Object {
+    "year": "",
+  },
+  "type": "DELETE_BILL",
+}
+`;
+
+exports[`deleteBill returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "month": "03",
+    "year": "2020",
+  },
+  "type": "DELETE_BILL",
+}
+`;
+
+exports[`deleteElectReading returns actions handles empty date 1`] = `
+Object {
+  "payload": Object {
+    "id": "",
+  },
+  "type": "DELETE_E_READING",
+}
+`;
+
+exports[`deleteElectReading returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "DELETE_E_READING",
+}
+`;
+
+exports[`deleteElectReading returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "id": "2020-01-01",
+  },
+  "type": "DELETE_E_READING",
+}
+`;
+
+exports[`deleteGasReading returns actions handles empty date 1`] = `
+Object {
+  "payload": Object {
+    "id": "",
+  },
+  "type": "DELETE_G_READING",
+}
+`;
+
+exports[`deleteGasReading returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "DELETE_G_READING",
+}
+`;
+
+exports[`deleteGasReading returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "id": "2020-01-01",
+  },
+  "type": "DELETE_G_READING",
+}
+`;
+
+exports[`deletePhoto returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "DELETE_PHOTOs",
+}
+`;
+
+exports[`deletePhoto returns actions handles empty saved 1`] = `
+Object {
+  "payload": Object {
+    "saved": "",
+  },
+  "type": "DELETE_PHOTOs",
+}
+`;
+
+exports[`deletePhoto returns actions handles empty uri 1`] = `
+Object {
+  "payload": Object {
+    "uri": "",
+  },
+  "type": "DELETE_PHOTOs",
+}
+`;
+
+exports[`deletePhoto returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "saved": false,
+    "uri": "directory/test.jpg",
+  },
+  "type": "DELETE_PHOTOs",
+}
+`;
+
+exports[`deletePhoto returns actions returns an action 2`] = `
+Object {
+  "payload": Object {
+    "saved": true,
+    "uri": "directory/test.jpg",
+  },
+  "type": "DELETE_PHOTOs",
+}
+`;
+
+exports[`deleteReminder returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "DELETE_REMINDER",
+}
+`;
+
+exports[`deleteReminder returns actions handles empty type 1`] = `
+Object {
+  "payload": Object {
+    "type": "",
+  },
+  "type": "DELETE_REMINDER",
+}
+`;
+
+exports[`deleteReminder returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "type": "daily_reading_reminder",
+  },
+  "type": "DELETE_REMINDER",
+}
+`;
+
+exports[`deleteUnsavedPhotos returns actions returns an action 1`] = `
+Object {
+  "type": "DELETE_UNSAVED_PHOTOS",
+}
+`;
+
+exports[`deleteWaterReading returns actions handles empty date 1`] = `
+Object {
+  "payload": Object {
+    "id": "",
+  },
+  "type": "DELETE_W_READING",
+}
+`;
+
+exports[`deleteWaterReading returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "DELETE_W_READING",
+}
+`;
+
+exports[`deleteWaterReading returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "id": "2020-01-01",
+  },
+  "type": "DELETE_W_READING",
+}
+`;
+
+exports[`resetStore returns actions returns an action 1`] = `
+Object {
+  "type": "RESET",
+}
+`;
+
+exports[`updateBill returns actions handles empty captures 1`] = `
+Object {
+  "payload": Object {
+    "captures": Array [],
+  },
+  "type": "UPDATE_BILL",
+}
+`;
+
+exports[`updateBill returns actions handles empty month 1`] = `
+Object {
+  "payload": Object {
+    "month": Array [],
+  },
+  "type": "UPDATE_BILL",
+}
+`;
+
+exports[`updateBill returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "UPDATE_BILL",
+}
+`;
+
+exports[`updateBill returns actions handles empty year 1`] = `
+Object {
+  "payload": Object {
+    "year": "",
+  },
+  "type": "UPDATE_BILL",
+}
+`;
+
+exports[`updateBill returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "captures": Array [
+      "directory/test/jpg",
+    ],
+    "month": "10",
+    "year": "2020",
+  },
+  "type": "UPDATE_BILL",
+}
+`;
+
+exports[`updateElectReading returns actions handles empty date 1`] = `
+Object {
+  "payload": Object {
+    "id": "",
+  },
+  "type": "UPDATE_E_READING",
+}
+`;
+
+exports[`updateElectReading returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "UPDATE_E_READING",
+}
+`;
+
+exports[`updateElectReading returns actions handles empty reading 1`] = `
+Object {
+  "payload": Object {
+    "reading": "",
+  },
+  "type": "UPDATE_E_READING",
+}
+`;
+
+exports[`updateElectReading returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "id": "2020-01-01",
+    "reading": "100",
+  },
+  "type": "UPDATE_E_READING",
+}
+`;
+
+exports[`updateGasReading returns actions handles empty date 1`] = `
+Object {
+  "payload": Object {
+    "id": "",
+  },
+  "type": "UPDATE_G_READING",
+}
+`;
+
+exports[`updateGasReading returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "UPDATE_G_READING",
+}
+`;
+
+exports[`updateGasReading returns actions handles empty reading 1`] = `
+Object {
+  "payload": Object {
+    "reading": "",
+  },
+  "type": "UPDATE_G_READING",
+}
+`;
+
+exports[`updateGasReading returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "id": "2020-01-01",
+    "reading": "100",
+  },
+  "type": "UPDATE_G_READING",
+}
+`;
+
+exports[`updateMarkedDate returns actions handles empty date 1`] = `
+Object {
+  "payload": Object {
+    "date": "",
+  },
+  "type": "UPDATE_G_READING",
+}
+`;
+
+exports[`updateMarkedDate returns actions handles empty dots 1`] = `
+Object {
+  "payload": Object {
+    "dots": Array [],
+  },
+  "type": "UPDATE_MARKED_DATE",
+}
+`;
+
+exports[`updateMarkedDate returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "UPDATE_MARKED_DATE",
+}
+`;
+
+exports[`updateMarkedDate returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "date": "2020-01-01",
+    "dots": Array [
+      Object {
+        "color": "red",
+        "key": "electricity",
+      },
+    ],
+  },
+  "type": "UPDATE_MARKED_DATE",
+}
+`;
+
+exports[`updateMarkedDate returns actions returns an action 2`] = `
+Object {
+  "payload": Object {
+    "date": "2020-01-01",
+    "dots": Array [
+      Object {
+        "color": "red",
+        "key": "electricity",
+      },
+      Object {
+        "color": "blue",
+        "key": "water",
+      },
+    ],
+  },
+  "type": "UPDATE_MARKED_DATE",
+}
+`;
+
+exports[`updateMarkedDate returns actions returns an action 3`] = `
+Object {
+  "payload": Object {
+    "date": "2020-01-01",
+    "dots": Array [
+      Object {
+        "color": "red",
+        "key": "electricity",
+      },
+      Object {
+        "color": "blue",
+        "key": "water",
+      },
+      Object {
+        "color": "green",
+        "key": "gas",
+      },
+    ],
+  },
+  "type": "UPDATE_MARKED_DATE",
+}
+`;
+
+exports[`updatePhoto returns actions handles empty captures 1`] = `
+Object {
+  "payload": Object {
+    "captures": Array [],
+  },
+  "type": "UPDATE_BILL",
+}
+`;
+
+exports[`updatePhoto returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "UPDATE_PHOTO",
+}
+`;
+
+exports[`updatePhoto returns actions handles empty saved 1`] = `
+Object {
+  "payload": Object {
+    "saved": "",
+  },
+  "type": "UPDATE_PHOTO",
+}
+`;
+
+exports[`updatePhoto returns actions handles empty uri 1`] = `
+Object {
+  "payload": Object {
+    "uri": "",
+  },
+  "type": "UPDATE_PHOTO",
+}
+`;
+
+exports[`updatePhoto returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "saved": false,
+    "uri": "directory/test.jpg",
+  },
+  "type": "UPDATE_PHOTO",
+}
+`;
+
+exports[`updateReminder returns actions handles empty date 1`] = `
+Object {
+  "payload": Object {
+    "date": "",
+  },
+  "type": "UPDATE_REMINDER",
+}
+`;
+
+exports[`updateReminder returns actions handles empty notification id 1`] = `
+Object {
+  "payload": Object {
+    "notification_id": "",
+  },
+  "type": "UPDATE_REMINDER",
+}
+`;
+
+exports[`updateReminder returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "UPDATE_REMINDER",
+}
+`;
+
+exports[`updateReminder returns actions handles empty type 1`] = `
+Object {
+  "payload": Object {
+    "type": "",
+  },
+  "type": "UPDATE_REMINDER",
+}
+`;
+
+exports[`updateReminder returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "date": 2020-01-01T00:00:00.000Z,
+    "notification_id": "12345678",
+    "type": "daily_reading_reminder",
+  },
+  "type": "UPDATE_REMINDER",
+}
+`;
+
+exports[`updateWaterReading returns actions handles empty date 1`] = `
+Object {
+  "payload": Object {
+    "id": "",
+  },
+  "type": "UPDATE_W_READING",
+}
+`;
+
+exports[`updateWaterReading returns actions handles empty object 1`] = `
+Object {
+  "payload": Object {},
+  "type": "UPDATE_W_READING",
+}
+`;
+
+exports[`updateWaterReading returns actions handles empty reading 1`] = `
+Object {
+  "payload": Object {
+    "reading": "",
+  },
+  "type": "UPDATE_W_READING",
+}
+`;
+
+exports[`updateWaterReading returns actions returns an action 1`] = `
+Object {
+  "payload": Object {
+    "id": "2020-01-01",
+    "reading": "100",
+  },
+  "type": "UPDATE_W_READING",
+}
+`;

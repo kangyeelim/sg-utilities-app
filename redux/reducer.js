@@ -89,7 +89,7 @@ const reminderReducer = (state=[], action) => {
   }
 }
 
-const appReducer = combineReducers({
+export const appReducer = combineReducers({
   electReadings: electReadingReducer,
   markedDates: markedDatesReducer,
   waterReadings: waterReadingReducer,
@@ -99,11 +99,11 @@ const appReducer = combineReducers({
   reminder: reminderReducer,
 })
 
-const rootReducer = (state, action) => {
+export const rootReducer = (state, action) => {
   if (action.type == RESET) {
     state = undefined;
   }
   return appReducer(state, action)
 }
 
-export default rootReducer;
+//export default rootReducer;
