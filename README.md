@@ -2,7 +2,7 @@
 A simple mobile app to help households keeps track of utilities usage through usage charts, daily meter readings and organising
 bills.
 
-![](/img/login.png | width=100)
+![](/img/login.png)
 
 ## How to use it
 
