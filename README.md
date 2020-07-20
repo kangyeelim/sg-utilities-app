@@ -2,6 +2,8 @@
 A simple mobile app to help households keeps track of utilities usage through usage charts, daily meter readings and organising
 bills.
 
+![](/img/login.png | width=100)
+
 ## How to use it
 
 * Overview: View information on consumption through charts 
@@ -12,6 +14,7 @@ bills.
 
 * Reminder: Set daily push notification reminder to take meter readings (in progress)
 
+## Screenshots
 
 ## Setup
 
