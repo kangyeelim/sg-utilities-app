@@ -2,21 +2,24 @@
 A simple mobile app to help households keeps track of utilities usage through usage charts, daily meter readings and organising
 bills.
 
-<img src="/img/login.png width="100"/>
-
 ![](/img/login.png)
 
 ## How to use it
 
 * Overview: View information on consumption through charts 
+![](/img/Screenshot_20200720-201828_Expo.jpg)
+
 
 * Bills: Organised monthly utility bills 
+![](/img/Screenshot_20200720-201552_Expo.jpg)
+![](/img/Screenshot_20200720-201612_Expo.jpg)
 
 * Readings: Input daily utility meter readings 
+![](/img/Screenshot_20200720-201749_Expo.jpg)
 
-* Reminder: Set daily push notification reminder to take meter readings (in progress)
-
-## Screenshots
+* Reminder: Set daily push notification reminder to take meter readings
+![](/img/Screenshot_20200720-201906_Expo.jpg)
+![](/img/Screenshot_20200720-201915_Expo.jpg)
 
 ## Setup
 
