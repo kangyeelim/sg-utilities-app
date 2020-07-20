@@ -80,10 +80,10 @@ class PhotoScreen extends React.Component {
 
   saveBill() {
     //save into redux store
-    if (+this.state.month > 0 && +this.state.month < 13 && +this.state.year > 999 && parseInt(this.state.year) < parseInt(new Date().getFullYear())
+    if (+this.state.month > 0 && +this.state.month < 13 && +this.state.year > 999 && +this.state.year <= +(new Date().getFullYear())
     && this.state.captures.length > 0) {
       this.removeBeforeEditBillFromStore();
-      this.props.updateBill({month:this.state.month, year:this.state.year, captures:this.state.captures});
+      this.props.updateBill({month:this.state.month, year:this.state.year, captures:this.state.captures}); 
       this.updateSavedPhotosInStore();
       this.props.navigation.push('BillsScreen');
     }
@@ -131,8 +131,8 @@ class PhotoScreen extends React.Component {
         {(this.state.checkedForProps) && (this.state.captures.length > 0)
           && (<Gallery style={styles.gallery} captures={this.state.captures} onDelete={this.handleDeletePhoto}/>)}
         {(this.state.checkedForProps) && (this.state.captures.length > 0)
-          && (<Button style={styles.saveButton} onPress={()=>this.saveBill()}
-          title="Save Bill" />)}
+          && (<Button style={styles.saveButton} onPress={()=> this.saveBill()}
+          title="Save" />)}
 
       </View>
       </ScrollView>
